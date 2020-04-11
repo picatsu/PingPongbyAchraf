@@ -1,0 +1,56 @@
+<div class="container" style="margin-top: 40px;">
+  <div class="row">
+    <div class="col-8">
+      <p>Please use the Up & Down Arrows of the keyboard</p>
+      <canvas
+        style="
+          border-left: 30px;
+          border-radius: 3%;
+          border: thick double #32a1ce;
+        "
+        #PongCanvas
+        width="{{ width }}"
+        height="{{ height }}"
+      ></canvas>
+      <p style="float: left;">Player 1 : {{ getPlayerScore() }}</p>
+      <p style="float: right;">machine : {{ getEnnemiScore() }}</p>
+    </div>
+
+    <div class="col-4" style="margin-top: 200px;">
+      <div class="col-6 col-sm-4">
+        <button
+          (mouseenter)="buttonUp()"
+          style="width: 200px; margin-left: 20px;"
+        >
+          UP
+          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
+        </button>
+      </div>
+      <br />
+      <br />
+      <br />
+      <div class="col-6 col-sm-4">
+        <button
+          (mouseenter)="buttonDown()"
+          style="width: 200px; margin-left: 20px;"
+        >
+          DOWN
+          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
+        </button>
+
+        <button (click)="freeze()" style="width: 200px; margin-left: 20px;">
+          freeze
+          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="col-6 col-sm-4">
+        <p>LAST SCORE :</p>
+      </div>
+
+      <div class="col-6 col-sm-4">
+        <p>BEST SCORE :</p>
+      </div>
+    </div>
+  </div>
+</div>
