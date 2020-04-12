@@ -82,9 +82,8 @@ export class PongGame {
       ballBounds.bottom >= paddleBounds.top &&
       ballBounds.top <= paddleBounds.bottom
     ) {
-      this.playerPaddle.score++;
       this.ball.reverseX();
-
+      this.playerPaddle.score++;
       // Set vertical speed ratio by taking ratio of
       // dist(centerOfBall, centerOfPaddle) to dist(topOfPaddle, centerOfPaddle)
       // Negate because pixels go up as we go down :)
@@ -105,9 +104,8 @@ export class PongGame {
       ballBounds.bottom >= paddleBounds.top &&
       ballBounds.top <= paddleBounds.bottom
     ) {
-      this.enemyPaddle.score++;
       this.ball.reverseX();
-
+      this.enemyPaddle.score++;
       // Set vertical speed ratio by taking ratio of
       // dist(centerOfBall, centerOfPaddle) to dist(topOfPaddle, centerOfPaddle)
       // Negate because pixels go up as we go down :)

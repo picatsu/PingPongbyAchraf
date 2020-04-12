@@ -1,0 +1,351 @@
+{
+  "swagger": "2.0",
+  "info": {
+  "version": "1.0.0",
+  "title": "TD2 ",
+  "description": "NODEJS & EXPRESSJS  REST API By ACHRAF #SWAGGER ",
+  "license": {
+    "name": "MIT d'EVRY",
+    "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Local Dev, or from Heroku"
+    },
+    {
+      "url": "/swagger/",
+      "description": "well its my swagger"
+    }
+  ],
+  "tags": [
+    {
+      "name": "People",
+      "description": "API for People with SSN in the system"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+
+
+    "/people/": {
+      "post": {
+        "tags": [
+          "people"
+        ],
+        "summary": "Create a new people in system",
+        "requestBody": {
+          "description": "poeple Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "people"
+        ],
+        "summary": "Get all people in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update people with given ID",
+        "tags": [
+          "people"
+        ],
+        "requestBody": {
+          "description": "People Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "people with new values of properties",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          },
+          "404": {
+            "description": "Failed. people not found."
+          }
+        }
+      }
+    },
+
+    "/peoplebyid/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the people that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "people"
+        ],
+        "summary": "Get people with given ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "people with id",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "404": {
+            "description": "Failed. people not found."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update people with given ID",
+        "tags": [
+          "people"
+        ],
+        "requestBody": {
+          "description": "People Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "People with new values of properties",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          },
+          "404": {
+            "description": "Failed. People not found."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete people with given ID",
+        "tags": [
+          "people"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Delete People with id",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "404": {
+            "description": "Failed. people not found."
+          }
+        }
+      }
+    },
+
+    "/peoplebyssn/{ssn}": {
+      "parameters": [
+        {
+          "name": "ssn",
+          "in": "path",
+          "required": true,
+          "description": "ssn of the people that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "people"
+        ],
+        "summary": "Get people with given ssn",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ssn",
+            "required": true,
+            "description": "people with ssn",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "404": {
+            "description": "Failed. ssn not found."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete people with given ssn",
+        "tags": [
+          "people"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ssn",
+            "required": true,
+            "description": "Delete People with ssn",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "404": {
+            "description": "Failed. ssn not found."
+          }
+        }
+      }
+    },
+
+    "/peoplebylastname/{lastname}": {
+      "parameters": [
+        {
+          "name": "lastname",
+          "in": "path",
+          "required": true,
+          "description": "lastname of the people that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "people"
+        ],
+        "summary": "Get people with given lastname",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "lastname",
+            "required": true,
+            "description": "people with lastname",
+            "schema": {
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+            }
+          },
+          "404": {
+            "description": "Failed. lastname not found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "id": {
+      "properties": {
+        "uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "people": {
+      "type": "object",
+      "properties": {
+        "lastname": {
+          "type": "string"
+        },
+        "birthname": {
+          "type": "string"
+        },
+        "ssn": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

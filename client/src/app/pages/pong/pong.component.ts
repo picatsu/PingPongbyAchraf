@@ -26,7 +26,7 @@ export class PongGameComponent implements OnInit {
   public lastScore: number = 0;
   private context: CanvasRenderingContext2D;
   private pongGame: PongGame;
-  private ticksPerSecond: number = 60;
+  private ticksPerSecond: number = 144;
 
   private controlState: ControlState;
 
@@ -47,21 +47,24 @@ export class PongGameComponent implements OnInit {
 
   freeze() {
     this.gamePaused = !this.gamePaused;
-    window.requestAnimationFrame(() => this.renderFrame());
+    if (!this.gamePaused) {
+      window.requestAnimationFrame(() => this.renderFrame());
+    }
   }
 
   ngAfterViewInit() {
     this.context = this.canvasElement.nativeElement.getContext("2d");
     this.context.fillStyle = this.sharedService.sidebarColor;
 
-    this.renderFrame();
-
     // Game model ticks 60 times per second. Doing this keeps same game speed
     // on higher FPS environments.
-    setInterval(
-      () => this.pongGame.tick(this.controlState),
-      1 / this.ticksPerSecond
-    );
+    if (!this.gamePaused) {
+      this.renderFrame();
+      setInterval(
+        () => this.pongGame.tick(this.controlState),
+        1 / this.ticksPerSecond
+      );
+    }
   }
 
   ngOnInit() {}
@@ -71,7 +74,16 @@ export class PongGameComponent implements OnInit {
       // Only run if game still going
       if (this.pongGame.gameOver()) {
         this.context.font = "30px Arial";
-        this.context.fillText("Game Over!", 50, 50);
+        if (this.getPlayerScore() >= this.getEnnemiScore()) {
+          this.context.fillText(
+            "YOU WIN ! Your score : " + this.getPlayerScore(),
+            50,
+            50
+          );
+        } else {
+          this.context.fillText("Game Over!", 50, 50);
+        }
+
         setTimeout(() => location.reload(), 50);
         window.requestAnimationFrame(() => this.renderFrame());
         return;
