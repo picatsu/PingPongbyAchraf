@@ -12,8 +12,34 @@
         width="{{ width }}"
         height="{{ height }}"
       ></canvas>
-      <p style="float: left;">Player 1 : {{ getPlayerScore() }}</p>
-      <p style="float: right;">machine : {{ getEnnemiScore() }}</p>
+      <div class="container" style="width: 800px;">
+        <div class="row" style="width: 800px;">
+          <div class="col-sm">
+            <p style="float: left;">Player 1 : {{ getPlayerScore() }}</p>
+          </div>
+          <div class="col-sm">
+            <button
+              (click)="freeze()"
+              style="width: 200px; margin-left: 20px;"
+              (keydown.backspace)="freeze()"
+            >
+              freeze
+              <i
+                class="fa fa-long-arrow-right arrow1 fa fa-play"
+                aria-hidden="true"
+                [ngClass]="{
+                  'fa fa-long-arrow-right arrow1 fas fa-pause':
+                    gamePaused === true,
+                  'fa fa-long-arrow-right  fa fa-play': gamePaused === false
+                }"
+              ></i>
+            </button>
+          </div>
+          <div class="col-sm">
+            <p style="float: right;">machine : {{ getEnnemiScore() }}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="col-4" style="margin-top: 200px;">
@@ -27,8 +53,7 @@
         </button>
       </div>
       <br />
-      <br />
-      <br />
+
       <div class="col-6 col-sm-4">
         <button
           (mouseenter)="buttonDown()"
@@ -37,19 +62,11 @@
           DOWN
           <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
         </button>
-
-        <button (click)="freeze()" style="width: 200px; margin-left: 20px;">
-          freeze
-          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
-        </button>
       </div>
-
-      <div class="col-6 col-sm-4">
-        <p>LAST SCORE :</p>
-      </div>
-
-      <div class="col-6 col-sm-4">
-        <p>BEST SCORE :</p>
+      <div style="height: 100px;"></div>
+      <div style="margin-left: 40px;">
+        <p>My Best Score :</p>
+        <p>Word Score :</p>
       </div>
     </div>
   </div>

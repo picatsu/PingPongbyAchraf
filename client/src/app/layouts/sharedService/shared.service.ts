@@ -5,5 +5,6 @@ import { Injectable } from "@angular/core";
 })
 export class SharedService {
   public sidebarColor: string = "black";
+  public activeUser: string = "anonyme";
   constructor() {}
 }

@@ -52,6 +52,8 @@ export class PongGameComponent implements OnInit {
 
   ngAfterViewInit() {
     this.context = this.canvasElement.nativeElement.getContext("2d");
+    this.context.fillStyle = this.sharedService.sidebarColor;
+
     this.renderFrame();
 
     // Game model ticks 60 times per second. Doing this keeps same game speed
@@ -152,7 +154,6 @@ export class PongGameComponent implements OnInit {
     this.controlState.upPressed = true;
     this.controlState.downPressed = false;
   }
-
   buttonDown() {
     this.controlState.upPressed = false;
     this.controlState.downPressed = true;
