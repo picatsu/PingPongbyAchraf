@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
-import { FormsModule, FormBuilder } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from "ngx-toastr";
@@ -21,7 +21,6 @@ import { BrowserModule } from "@angular/platform-browser";
     HttpClientModule,
     ComponentsModule,
     NgbModule,
-    FormBuilder,
     RouterModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
