@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header"><h5 class="title">Edit Profile</h5></div>
         <div class="card-body">
-          <form>
+          <form #f="ngForm" (ngSubmit)="onSave(f)">
             <div class="row">
               <div class="col-md-3 px-md-1">
                 <div class="form-group">
@@ -13,7 +13,9 @@
                     class="form-control"
                     placeholder="Username"
                     type="text"
-                    value="michael23"
+                    value=""
+                    name="username"
+                    ngModel
                   />
                 </div>
               </div>
@@ -24,6 +26,8 @@
                     class="form-control"
                     placeholder="mike@email.com"
                     type="email"
+                    name="email"
+                    ngModel
                   />
                 </div>
               </div>
@@ -37,6 +41,8 @@
                     placeholder="Company"
                     type="text"
                     value="Mike"
+                    name="firstname"
+                    ngModel
                   />
                 </div>
               </div>
@@ -48,6 +54,8 @@
                     placeholder="Last Name"
                     type="text"
                     value="Andrew"
+                    name="lastname"
+                    ngModel
                   />
                 </div>
               </div>
@@ -61,44 +69,13 @@
                     placeholder="Home Address"
                     type="text"
                     value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                    name="adress"
+                    ngModel
                   />
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 pr-md-1">
-                <div class="form-group">
-                  <label> City </label>
-                  <input
-                    class="form-control"
-                    placeholder="City"
-                    type="text"
-                    value="Mike"
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 px-md-1">
-                <div class="form-group">
-                  <label> Country </label>
-                  <input
-                    class="form-control"
-                    placeholder="Country"
-                    type="text"
-                    value="Andrew"
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 pl-md-1">
-                <div class="form-group">
-                  <label> Postal Code </label>
-                  <input
-                    class="form-control"
-                    placeholder="ZIP Code"
-                    type="number"
-                  />
-                </div>
-              </div>
-            </div>
+
             <div class="row">
               <div class="col-md-8">
                 <div class="form-group">
@@ -115,7 +92,13 @@
           </form>
         </div>
         <div class="card-footer">
-          <button class="btn btn-fill btn-success" type="submit">Save</button>
+          <button
+            class="btn btn-fill btn-success"
+            type="submit"
+            (click)="onSave(f.value)"
+          >
+            Save
+          </button>
           <button
             class="btn btn-fill btn-danger"
             type="submit"
