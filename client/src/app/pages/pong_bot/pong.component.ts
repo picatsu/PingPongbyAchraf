@@ -21,6 +21,7 @@ export class PongGameComponent implements OnInit {
   @ViewChild("PongCanvas") canvasElement: ElementRef;
 
   public gamePaused: boolean = false;
+  public gameisPVM: boolean = true;
   public width: number = 800;
   public height: number = 600;
   public lastScore: number = 0;
@@ -29,6 +30,7 @@ export class PongGameComponent implements OnInit {
   private ticksPerSecond: number = 144;
 
   private controlState: ControlState;
+  private controlEnnemiState: ControlState;
 
   constructor(
     private readonly sharedService: SharedService,
@@ -36,6 +38,11 @@ export class PongGameComponent implements OnInit {
   ) {
     this.pongGame = new PongGame(this.height, this.width);
     this.controlState = { upPressed: false, downPressed: false };
+    this.controlEnnemiState = { upPressed: false, downPressed: false };
+  }
+
+  changeGameMode() {
+    this.gameisPVM = !this.gameisPVM;
   }
   getPlayerScore() {
     return this.pongGame.playerPaddle.score;
@@ -58,12 +65,21 @@ export class PongGameComponent implements OnInit {
 
     // Game model ticks 60 times per second. Doing this keeps same game speed
     // on higher FPS environments.
+
     if (!this.gamePaused) {
       this.renderFrame();
-      setInterval(
-        () => this.pongGame.tick(this.controlState),
-        1 / this.ticksPerSecond
-      );
+
+      if (!this.gameisPVM) {
+        setInterval(
+          () => this.pongGame.tick(this.controlState, this.controlEnnemiState),
+          1 / this.ticksPerSecond
+        );
+      } else {
+        setInterval(
+          () => this.pongGame.tick(this.controlState),
+          1 / this.ticksPerSecond
+        );
+      }
     }
   }
 

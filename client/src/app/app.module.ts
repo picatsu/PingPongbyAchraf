@@ -29,5 +29,6 @@ import { BrowserModule } from "@angular/platform-browser";
   declarations: [AppComponent, AdminLayoutComponent],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

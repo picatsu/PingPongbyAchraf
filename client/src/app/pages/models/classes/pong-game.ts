@@ -2,18 +2,21 @@ import { Ball } from "./ball";
 import { Boundaries } from "./boundaries";
 import { Paddle } from "./paddle";
 import { ControlState } from "./control-state";
+import { Controls } from "../enums/controls";
 
 export class PongGame {
   public ball: Ball;
   public playerPaddle: Paddle;
   public enemyPaddle: Paddle;
+  public gameisPVM: boolean;
 
-  private height: number;
-  private width: number;
+  public height: number;
+  public width: number;
 
   constructor(height: number, width: number) {
     this.height = height;
     this.width = width;
+    this.gameisPVM = true;
 
     // Construct game objects
     this.ball = new Ball(
@@ -36,7 +39,7 @@ export class PongGame {
     );
   }
 
-  tick(controlState: ControlState) {
+  tick(controlState: ControlState, direction?: ControlState) {
     this.ball.move();
 
     // Set acceleration, move player paddle based on input
@@ -50,11 +53,15 @@ export class PongGame {
     }
     this.playerPaddle.move();
 
-    this.moveEnemyPaddle();
+    if (direction) {
+      this.moveEnemyPaddle_Controled(direction);
+    } else {
+      this.moveEnemyPaddle();
+    }
     this.checkCollisions();
   }
 
-  private moveEnemyPaddle() {
+  public moveEnemyPaddle() {
     if (this.ball.getPosition().y < this.enemyPaddle.getPosition().y)
       this.enemyPaddle.accelerateUp(1);
     else this.enemyPaddle.accelerateDown(1);
@@ -62,7 +69,18 @@ export class PongGame {
     this.enemyPaddle.move();
   }
 
-  private checkCollisions() {
+  public moveEnemyPaddle_Controled(direction: ControlState) {
+    if (
+      direction.upPressed &&
+      this.ball.getPosition().y < this.enemyPaddle.getPosition().y
+    ) {
+      this.enemyPaddle.accelerateUp(1);
+    } else this.enemyPaddle.accelerateDown(1);
+
+    this.enemyPaddle.move();
+  }
+
+  public checkCollisions() {
     // Bounce off top/bottom
     let ballBounds = this.ball.getCollisionBoundaries();
     if (ballBounds.bottom >= this.height || ballBounds.top <= 0) {

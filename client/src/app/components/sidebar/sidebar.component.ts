@@ -10,9 +10,23 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   {
     path: "/pong",
-    title: "Pong",
+    title: "Pong Bot",
     rtlTitle: "خرائط",
-    icon: "icon-pin",
+    icon: "icon-laptop",
+    class: "",
+  },
+  {
+    path: "/pong1v1",
+    title: "Pong 1v1",
+    rtlTitle: "خرائط",
+    icon: "icon-controller",
+    class: "",
+  },
+  {
+    path: "/pongonline",
+    title: "Pong Online",
+    rtlTitle: "خرائط",
+    icon: "icon-cloud-upload-94",
     class: "",
   },
   {
