@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import Chart from "chart.js";
 import {
   SharedService,
   User,
 } from "src/app/layouts/sharedService/shared.service";
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "dashboard.component.html",
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild("content") contentElement: ElementRef;
   public canvas: any;
   public ctx;
   public datasets: any;
@@ -19,13 +21,44 @@ export class DashboardComponent implements OnInit {
   public clicked1: boolean = false;
   public clicked2: boolean = false;
   public sliceValue: number = 3;
-
+  public closeResult = "";
+  public username: string;
+  public email: string;
+  public actualUser: User;
   public users: User[] = [];
 
-  constructor(private sharedService: SharedService) {
+  constructor(
+    private sharedService: SharedService,
+    private modalService: NgbModal
+  ) {
     this.sharedService.getAllUsers().subscribe((x: User[]) => {
       this.users = x;
     });
+  }
+  ngAfterViewInit() {
+    this.open(this.contentElement);
+  }
+  open(content: any) {
+    console.log("open clicked : ", content);
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   public addRows() {

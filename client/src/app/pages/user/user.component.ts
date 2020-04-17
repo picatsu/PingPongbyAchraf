@@ -10,7 +10,12 @@ import {
 })
 export class UserComponent implements OnInit {
   public user: User;
-  constructor(private sharedService: SharedService) {}
+  public myIp: string = "";
+  constructor(public sharedService: SharedService) {
+    this.sharedService.getIPAddress().subscribe((x: any) => {
+      this.myIp = x.ip;
+    });
+  }
 
   onSave(user: User) {
     console.log("g recu sa :", user);

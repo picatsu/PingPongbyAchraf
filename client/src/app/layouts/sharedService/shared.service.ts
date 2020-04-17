@@ -8,8 +8,13 @@ import { environment } from "src/environments/environment";
 export class SharedService {
   public sidebarColor: string = "black";
   public activeUser: string = "anonyme";
+  public myIp: string = "";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getIPAddress().subscribe((x: any) => {
+      this.myIp = x.ip;
+    });
+  }
 
   getAllUsers() {
     return this.http.get(environment.nodeApiUrl + "/allusers/");
@@ -25,6 +30,10 @@ export class SharedService {
 
   putOneUser(user: User) {
     return this.http.put("/userbyusername/" + user.username, user);
+  }
+
+  public getIPAddress() {
+    return this.http.get("http://api.ipify.org/?format=json");
   }
 }
 
