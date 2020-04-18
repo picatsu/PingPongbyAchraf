@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -10,10 +11,16 @@ export class SharedService {
   public activeUser: string = "anonyme";
   public myIp: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getIPAddress().subscribe((x: any) => {
       this.myIp = x.ip;
     });
+  }
+
+  onKeyDownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.router.navigate(["/dashboard"]);
+    }
   }
 
   getAllUsers() {

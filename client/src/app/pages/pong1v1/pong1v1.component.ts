@@ -40,6 +40,12 @@ export class Pong1v1Component implements OnInit {
     this.controlEnnemiState = { upPressed: false, downPressed: false };
   }
 
+  @HostListener("document:keydown", ["$event"])
+  onKeyDownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.sharedService.onKeyDownHandler(event);
+    }
+  }
   changeGameMode() {
     this.gameisPVM = !this.gameisPVM;
   }

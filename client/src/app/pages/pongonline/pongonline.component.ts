@@ -11,7 +11,8 @@ import { ControlState } from "../models/classes/control-state";
 import { Boundaries } from "../models/classes/boundaries";
 import { Controls } from "../models/enums/controls";
 import { SharedService } from "src/app/layouts/sharedService/shared.service";
-
+import * as io from "socket.io-client";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-pongonline",
   templateUrl: "./pongonline.component.html",
@@ -28,14 +29,22 @@ export class PongonlineComponent implements OnInit {
   private context: CanvasRenderingContext2D;
   private pongGame: PongGame;
   private ticksPerSecond: number = 144;
-
+  private url = "http://localhost:" + 3000;
   private controlState: ControlState;
   private controlEnnemiState: ControlState;
+  private socket;
+  @HostListener("document:keydown", ["$event"])
+  onKeyDownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.sharedService.onKeyDownHandler(event);
+    }
+  }
 
   constructor(
     private readonly sharedService: SharedService,
     private changeDetector: ChangeDetectorRef
   ) {
+    this.socket = io(this.url);
     this.pongGame = new PongGame(this.height, this.width);
     this.controlState = { upPressed: false, downPressed: false };
     this.controlEnnemiState = { upPressed: false, downPressed: false };
@@ -84,6 +93,30 @@ export class PongonlineComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  sendMessage(player: string, direction: string) {
+    console.log("AFFICHAGE ANGULAR ", this.socket);
+
+    this.socket.emit(player, direction);
+    this.socket.on(player, (message) => {
+      console.log("player2 value => ", message);
+    });
+  }
+
+  getMessage() {
+    //return this.socket
+    //  .fromEvent("new message") ;
+    return Observable.create((observer) => {
+      this.socket.on("new message", (message) => {
+        observer.next(message);
+        console.log("getMessage() => ", message);
+      });
+      this.socket.emit("player1", "hello from client player 1");
+      this.socket.on("player2", (message) => {
+        console.log("player2 get message a recu:  ", message);
+      });
+    });
+  }
 
   renderFrame(): void {
     if (!this.gamePaused) {
@@ -162,9 +195,11 @@ export class PongonlineComponent implements OnInit {
   keyUp(event: KeyboardEvent) {
     if (event.keyCode == Controls.Up) {
       this.controlState.upPressed = true;
+      this.sendMessage("player1", "up");
     }
     if (event.keyCode == Controls.Down) {
       this.controlState.downPressed = true;
+      this.sendMessage("player1", "down");
     }
   }
 
@@ -172,19 +207,23 @@ export class PongonlineComponent implements OnInit {
   keyDown(event: KeyboardEvent) {
     if (event.keyCode == Controls.Up) {
       this.controlState.upPressed = false;
+      this.sendMessage("player1", "stop");
     }
     if (event.keyCode == Controls.Down) {
       this.controlState.downPressed = false;
+      this.sendMessage("player1", "stop");
     }
   }
 
   buttonUp() {
     this.controlState.upPressed = true;
     this.controlState.downPressed = false;
+    this.sendMessage("player1", "up");
   }
   buttonDown() {
     this.controlState.upPressed = false;
     this.controlState.downPressed = true;
+    this.sendMessage("player1", "down");
   }
 
   buttonEnnemiUp() {

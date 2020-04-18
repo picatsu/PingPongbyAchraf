@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
@@ -17,6 +17,9 @@ import { TypographyComponent } from "../../pages/typography/typography.component
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { Pong1v1Component } from "src/app/pages/pong1v1/pong1v1.component";
 import { PongonlineComponent } from "src/app/pages/pongonline/pongonline.component";
+import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
+
+const config: SocketIoConfig = { url: "http://localhost:3000", options: {} };
 
 @NgModule({
   imports: [
@@ -25,6 +28,7 @@ import { PongonlineComponent } from "src/app/pages/pongonline/pongonline.compone
     FormsModule,
     HttpClientModule,
     NgbModule,
+    SocketIoModule.forRoot(config),
   ],
   declarations: [
     DashboardComponent,
@@ -38,5 +42,6 @@ import { PongonlineComponent } from "src/app/pages/pongonline/pongonline.compone
     PongonlineComponent,
     // RtlComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminLayoutModule {}

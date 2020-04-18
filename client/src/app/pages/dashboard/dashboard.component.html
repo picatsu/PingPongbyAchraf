@@ -50,6 +50,32 @@
     </div>
   </ng-template>
 
+  <h4>
+    TEST SECTION FOR SOCKET :
+  </h4>
+  <div>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      aria-label="Up"
+      (click)="sendUp()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      aria-label="Down"
+      (click)="sendDown()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <textarea class="form-control" type="number" [value]="myIp">{{
+      textBack
+    }}</textarea>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <div class="card">

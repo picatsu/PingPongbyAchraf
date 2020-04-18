@@ -28,6 +28,14 @@ export class PongGameComponent implements OnInit {
   private context: CanvasRenderingContext2D;
   private pongGame: PongGame;
   private ticksPerSecond: number = 144;
+  private url = "http://localhost:" + 3000;
+
+  @HostListener("document:keydown", ["$event"])
+  onKeyDownHandler(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.sharedService.onKeyDownHandler(event);
+    }
+  }
 
   private controlState: ControlState;
   private controlEnnemiState: ControlState;
@@ -137,6 +145,7 @@ export class PongGameComponent implements OnInit {
       );
 
       // Draw ball
+
       let ballObj = this.pongGame.ball;
       bounds = ballObj.getCollisionBoundaries();
 
@@ -146,9 +155,7 @@ export class PongGameComponent implements OnInit {
         ballObj.getWidth(),
         ballObj.getHeight()
       );
-
       // Render next frame
-
       window.requestAnimationFrame(() => this.renderFrame());
     }
   }

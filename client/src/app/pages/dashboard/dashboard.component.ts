@@ -5,7 +5,8 @@ import {
   User,
 } from "src/app/layouts/sharedService/shared.service";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-
+import * as io from "socket.io-client";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-dashboard",
   templateUrl: "dashboard.component.html",
@@ -26,15 +27,46 @@ export class DashboardComponent implements OnInit {
   public email: string;
   public actualUser: User;
   public users: User[] = [];
-
+  private socket;
+  private url = "http://localhost:" + 3000;
+  textBack = "";
   constructor(
     private sharedService: SharedService,
     private modalService: NgbModal
   ) {
+    this.socket = io(this.url);
     this.sharedService.getAllUsers().subscribe((x: User[]) => {
       this.users = x;
     });
   }
+
+  getMessage() {
+    //return this.socket
+    //  .fromEvent("new message") ;
+    return Observable.create((observer) => {
+      this.socket.on("new message", (message) => {
+        observer.next(message);
+        console.log("getMessage() => ", message);
+      });
+
+      this.socket.on("player1", (message) => {
+        console.log("player1 get message a recu:  ", message);
+        this.textBack = message;
+      });
+    });
+  }
+  sendUp() {
+    this.socket.emit("player1", "up");
+    this.socket.on("player1", (message) => {
+      console.log("player1 get message a recu:  ", message);
+      this.textBack = message;
+    });
+  }
+
+  sendDown() {
+    this.socket.emit("player1", "down");
+  }
+
   ngAfterViewInit() {
     this.open(this.contentElement);
   }
@@ -543,6 +575,7 @@ export class DashboardComponent implements OnInit {
       options: gradientBarChartConfiguration,
     });
   }
+
   public updateOptions() {
     this.myChartData.data.datasets[0].data = this.data;
     this.myChartData.update();
