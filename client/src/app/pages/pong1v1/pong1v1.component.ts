@@ -11,6 +11,7 @@ import { ControlState } from "../models/classes/control-state";
 import { Boundaries } from "../models/classes/boundaries";
 import { Controls } from "../models/enums/controls";
 import { SharedService } from "src/app/layouts/sharedService/shared.service";
+import { NavigationEnd, Router } from "@angular/router";
 @Component({
   selector: "app-pong1v1",
   templateUrl: "./pong1v1.component.html",
@@ -18,7 +19,7 @@ import { SharedService } from "src/app/layouts/sharedService/shared.service";
 })
 export class Pong1v1Component implements OnInit {
   @ViewChild("PongCanvas") canvasElement: ElementRef;
-
+  public activeUsername = "Unknown";
   public gamePaused: boolean = false;
   public gameisPVM: boolean = false;
   public width: number = 800;
@@ -27,17 +28,38 @@ export class Pong1v1Component implements OnInit {
   private context: CanvasRenderingContext2D;
   private pongGame: PongGame;
   private ticksPerSecond: number = 144;
+  public bestScore = 0;
+  public authorLastScore = "Clavier";
+  public authorBestScore = "Clavier";
 
+  mySubscription: any;
   private controlState: ControlState;
   private controlEnnemiState: ControlState;
 
   constructor(
     private readonly sharedService: SharedService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private router: Router
   ) {
     this.pongGame = new PongGame(this.height, this.width);
     this.controlState = { upPressed: false, downPressed: false };
     this.controlEnnemiState = { upPressed: false, downPressed: false };
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 
   @HostListener("document:keydown", ["$event"])
@@ -90,11 +112,43 @@ export class Pong1v1Component implements OnInit {
 
   ngOnInit() {}
 
+  getLastScore() {
+    return localStorage.getItem("lastScore");
+  }
+  getBestScore() {
+    return localStorage.getItem("bestScore");
+  }
+  getAuthorLastScore() {
+    return localStorage.getItem("authorLastScore");
+  }
+  getAuthorBestScore() {
+    return localStorage.getItem("authorBestScore");
+  }
   renderFrame(): void {
     if (!this.gamePaused) {
       // Only run if game still going
       if (this.pongGame.gameOver()) {
         this.context.font = "30px Arial ";
+        this.sharedService.activeUser = this.activeUsername;
+        if (this.getEnnemiScore() > this.getPlayerScore()) {
+          this.lastScore = this.getEnnemiScore();
+          localStorage.setItem("lastScore", this.lastScore.toString());
+          this.authorLastScore = "Souris";
+          localStorage.setItem("authorLastScore", this.authorLastScore);
+        } else {
+          this.lastScore = this.getPlayerScore();
+          localStorage.setItem("lastScore", this.lastScore.toString());
+          this.authorLastScore = "Clavier";
+          localStorage.setItem("authorLastScore", this.authorLastScore);
+        }
+
+        this.bestScore = Number(this.getBestScore());
+        if (this.lastScore > this.bestScore) {
+          this.bestScore = this.lastScore;
+          localStorage.setItem("bestScore", this.bestScore.toString());
+          this.authorBestScore = this.authorLastScore;
+          localStorage.setItem("authorBestScore", this.authorBestScore);
+        }
 
         if (this.getPlayerScore() >= this.getEnnemiScore()) {
           this.context.fillText(
@@ -106,7 +160,7 @@ export class Pong1v1Component implements OnInit {
           this.context.fillText("Game Over!", 50, 50);
         }
 
-        setTimeout(() => location.reload(), 50);
+        setTimeout(() => location.reload(), 80);
         window.requestAnimationFrame(() => this.renderFrame());
         return;
       }

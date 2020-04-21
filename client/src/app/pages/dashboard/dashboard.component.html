@@ -1,81 +1,10 @@
 <div class="content">
-  <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="dateOfBirth">Username</label>
-          <div class="input-group">
-            <input
-              id="username"
-              class="form-control"
-              name="dp"
-              style="color: black;"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateOfBirth">Email</label>
-          <div class="input-group">
-            <input
-              id="email"
-              class="form-control"
-              name="dp"
-              style="color: black;"
-              required
-            />
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-outline-dark"
-        (click)="modal.close('Save click')"
-      >
-        Save
-      </button>
-    </div>
-  </ng-template>
-
-  <h4>
-    TEST SECTION FOR SOCKET :
-  </h4>
-  <div>
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      aria-label="Up"
-      (click)="sendUp()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      aria-label="Down"
-      (click)="sendDown()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-
-    <textarea class="form-control" type="number" [value]="myIp">{{
-      textBack
-    }}</textarea>
-  </div>
+  <textarea
+    class="form-control"
+    type="number"
+    [value]="sharedService.activeUsername"
+    >{{ sharedService.activeUsername }}</textarea
+  >
   <div class="row">
     <div class="col-md-12">
       <div class="card">

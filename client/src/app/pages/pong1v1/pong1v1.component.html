@@ -67,8 +67,24 @@
       </div>
       <div style="height: 100px;"></div>
       <div style="margin-left: 40px;">
-        <p>My Best Score :</p>
-        <p>Word Score :</p>
+        <p>Last Score : {{ getLastScore() }} by {{ getAuthorLastScore() }}</p>
+        <p>Best Score : {{ getBestScore() }} by {{ getAuthorBestScore() }}</p>
+        <input
+          class="form-control"
+          id="inlineFormInputGroup"
+          placeholder="Username player 1 "
+          type="text"
+          name="activeUsername"
+          ngModel
+        />
+        <input
+          class="form-control"
+          id="inlineFormInputGroup"
+          placeholder="Username player 2 "
+          type="text"
+          name="activeUsername"
+          ngModel
+        />
       </div>
     </div>
   </div>

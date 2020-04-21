@@ -10,6 +10,7 @@ export class SharedService {
   public sidebarColor: string = "black";
   public activeUser: string = "anonyme";
   public myIp: string = "";
+  public activeUsername = "Unknown";
 
   constructor(private http: HttpClient, private router: Router) {
     this.getIPAddress().subscribe((x: any) => {

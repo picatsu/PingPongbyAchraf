@@ -1,75 +1,26 @@
-<div class="container" style="margin-top: 40px;">
+<div class="container" style="margin-top: 100px;">
   <div class="row">
     <div class="col-8">
-      <p>Player 1 : Up / Down arrows keys</p>
-      <p>Player 2 : mousevent button on the right</p>
+      <p style="margin-left: 190px;">
+        Please use the Up & Down Arrows of the keyboard PONGONLINE
+      </p>
 
-      <canvas
+      <iframe
+        [src]="urlSafe"
+        name="targetframe"
+        allowTransparency="true"
+        scrolling="no"
+        frameborder="1"
+        width="800"
+        height="600"
+        id="mycanvas"
         style="
-          border-left: 60px;
           border-radius: 3%;
           border: thick double #32a1ce;
+          margin-left: 100px;
         "
-        #PongCanvas
-        width="{{ width }}"
-        height="{{ height }}"
-      ></canvas>
-      <div class="container" style="width: 800px;">
-        <div class="row" style="width: 800px;">
-          <div class="col-sm">
-            <p style="float: left;">Player 1 : {{ getPlayerScore() }}</p>
-          </div>
-          <div class="col-sm">
-            <button
-              (click)="freeze()"
-              style="width: 200px; margin-left: 20px;"
-              (keydown.backspace)="freeze()"
-            >
-              freeze
-              <i
-                class="fa fa-long-arrow-right arrow1 fa fa-play"
-                aria-hidden="true"
-                [ngClass]="{
-                  'fa fa-long-arrow-right arrow1 fas fa-pause':
-                    gamePaused === true,
-                  'fa fa-long-arrow-right  fa fa-play': gamePaused === false
-                }"
-              ></i>
-            </button>
-          </div>
-          <div class="col-sm">
-            <p style="float: right;">Player 2 : {{ getEnnemiScore() }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-4" style="margin-top: 200px;">
-      <div class="col-6 col-sm-4">
-        <button
-          (mouseenter)="buttonEnnemiUp()"
-          style="width: 200px; margin-left: 20px;"
-        >
-          UP
-          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
-        </button>
-      </div>
-      <br />
-
-      <div class="col-6 col-sm-4">
-        <button
-          (mouseenter)="buttonEnnemiDown()"
-          style="width: 200px; margin-left: 20px;"
-        >
-          DOWN
-          <i class="fa fa-long-arrow-right arrow1" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div style="height: 100px;"></div>
-      <div style="margin-left: 40px;">
-        <p>My Best Score :</p>
-        <p>Word Score :</p>
-      </div>
+      >
+      </iframe>
     </div>
   </div>
 </div>
