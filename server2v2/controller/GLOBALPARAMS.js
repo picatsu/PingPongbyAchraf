@@ -6,7 +6,7 @@ var GLOBALPARAMS = {
   BORDER_WIDTH: 10,
   BACKGROUND_COLOR: "#000000",
   PLAYER: {
-    WIDTH: 20,
+    WIDTH: 10,
     HEIGHT: 80,
     GAP: 30,
   },

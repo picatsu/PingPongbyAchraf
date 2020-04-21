@@ -1,3 +1,4 @@
 node_modules/
 oldSHIT/
 server/serviceAccountKey.json
+.jscpd

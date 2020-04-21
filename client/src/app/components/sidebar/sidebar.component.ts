@@ -37,41 +37,18 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/tables",
-    title: "Table List",
-    rtlTitle: "قائمة الجدول",
-    icon: "icon-puzzle-10",
-    class: "",
-  },
-  {
-    path: "/user",
-    title: "User Profile",
-    rtlTitle: "ملف تعريفي للمستخدم",
-    icon: "icon-single-02",
-    class: "",
-  },
-
-  {
-    path: "/icons",
-    title: "Icons",
-    rtlTitle: "الرموز",
-    icon: "icon-atom",
-    class: "",
-  },
-
-  {
-    path: "/notifications",
-    title: "Notifications",
-    rtlTitle: "إخطارات",
-    icon: "icon-bell-55",
-    class: "",
-  },
-
-  {
-    path: "/typography",
-    title: "Typography",
+    path: "/vsdeux",
+    title: "2 vs 2 ",
     rtlTitle: "طباعة",
     icon: "icon-align-center",
+    class: "",
+  },
+
+  {
+    path: "/user",
+    title: "Games Rules",
+    rtlTitle: "ملف تعريفي للمستخدم",
+    icon: "icon-single-02",
     class: "",
   },
 ];

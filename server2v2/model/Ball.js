@@ -15,9 +15,9 @@ var COLLUSION_TYPE = {
 var QUADRANT = { FIRST: 1, SECOND: 2, THIRD: 3, FOURTH: 4 };
 var TO = { RIGHT: "RIGHT", LEFT: "LEFT", UP: "UP", DOWN: "DOWN" };
 
-function Ball(player0Id, player1Id) {
+function Ball(player0Id, player1Id, player2Id, player3Id) {
   Base.call(this);
-  this.playerIds = [player0Id, player1Id];
+  this.playerIds = [player0Id, player1Id, player2Id, player3Id];
   this.dynamic = {};
   this.speed = 4;
   this.boostCount = 0;
@@ -114,12 +114,14 @@ Ball.prototype.update = function (room) {
 
     if (ball.x <= 0 - ball.width * 2) {
       room.objects[this.playerIds[1]].score++;
+      room.objects[this.playerIds[3]].score++;
       this.serve = new Serve(this.playerIds[0]);
       ball.color.fill = "#f2c624";
       this.boostCount = 0;
     }
     if (ball.x >= PARAMS.WIDTH + ball.width * 2) {
       room.objects[this.playerIds[0]].score++;
+      room.objects[this.playerIds[2]].score++;
       this.serve = new Serve(this.playerIds[1]);
       ball.color.fill = "#f2c624";
       this.boostCount = 0;

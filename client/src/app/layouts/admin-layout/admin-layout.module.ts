@@ -6,7 +6,7 @@ import { FormsModule } from "@angular/forms";
 
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
-import { IconsComponent } from "../../pages/icons/icons.component";
+import { VsdeuxComponent } from "../../pages/vsdeux/vsdeux.component";
 import { PongGameComponent } from "../../pages/pong_bot/pong.component";
 import { NotificationsComponent } from "../../pages/notifications/notifications.component";
 import { UserComponent } from "../../pages/user/user.component";
@@ -34,7 +34,7 @@ const config: SocketIoConfig = { url: "http://localhost:3000", options: {} };
     DashboardComponent,
     UserComponent,
     TablesComponent,
-    IconsComponent,
+    VsdeuxComponent,
     TypographyComponent,
     NotificationsComponent,
     PongGameComponent,

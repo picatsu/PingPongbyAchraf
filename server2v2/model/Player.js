@@ -1,6 +1,7 @@
 var PARAMS = require("../controller/GLOBALPARAMS.js");
 var Base = require("./Base.js");
-
+var numberPlayerX = false;
+var numberPlayerY = true;
 var LEFT = 37,
   UP = 38,
   RIGHT = 39,
@@ -16,10 +17,21 @@ function Player(id, position) {
   var xPos;
   switch (position) {
     case "LEFT":
-      xPos = PARAMS.PLAYER.GAP;
+      if (this.numberPlayerX) {
+        xPos = PARAMS.PLAYER.GAP + 10;
+        this.numberPlayerX = !this.numberPlayerX;
+      } else {
+        xPos = PARAMS.PLAYER.GAP;
+      }
+
       break;
     case "RIGHT":
-      xPos = PARAMS.WIDTH - PARAMS.PLAYER.GAP;
+      if (this.numberPlayerY) {
+        xPos = PARAMS.WIDTH - PARAMS.PLAYER.GAP + 10;
+      } else {
+        xPos = PARAMS.WIDTH - PARAMS.PLAYER.GAP;
+      }
+
       break;
   }
   this.role = "player";

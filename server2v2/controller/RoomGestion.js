@@ -10,17 +10,24 @@ function RoomGestion(io) {
   RmGs.rooms = {};
   RmGs.roomIndex = {};
 
-  RmGs.create = function (socket0, socket1) {
-    var roomId = socket0.id + socket1.id;
-    var room = new Room(RmGs, io, roomId, socket0, socket1);
+  RmGs.create = function (socket0, socket1, socket2, socket3) {
+    var roomId = socket0.id + socket1.id + socket2.id + socket3.id;
+    var room = new Room(RmGs, io, roomId, socket0, socket1, socket2, socket3);
     socket0.join(roomId);
     socket1.join(roomId);
+    socket2.join(roomId);
+    socket3.join(roomId);
     RmGs.rooms[roomId] = room;
     RmGs.roomIndex[socket0.id] = roomId;
     RmGs.roomIndex[socket1.id] = roomId;
+    RmGs.roomIndex[socket2.id] = roomId;
+    RmGs.roomIndex[socket3.id] = roomId;
     ready.initialize(io, room);
     io.to(socket0.id).emit("ready", "left");
     io.to(socket1.id).emit("ready", "right");
+    io.to(socket2.id).emit("ready", "left");
+    io.to(socket3.id).emit("ready", "right");
+
     console.log("Room Cree :", roomId);
   };
   RmGs.destroy = function (roomId) {
@@ -48,17 +55,26 @@ function RoomGestion(io) {
 
 module.exports = RoomGestion;
 
-function Room(RmGs, io, id, socket0, socket1) {
+function Room(RmGs, io, id, socket0, socket1, socket2, socket3) {
   var room = this;
   room.id = id;
   room.RmGs = RmGs;
-  room.players = [socket0, socket1];
+  room.players = [socket0, socket1, socket2, socket3];
   room.objects = {};
   room.objects[room.players[0].id] = new Player(room.players[0].id, "LEFT");
   room.objects[room.players[1].id] = new Player(room.players[1].id, "RIGHT");
+  room.objects[room.players[2].id] = new Player(room.players[2].id, "LEFT");
+  room.objects[room.players[3].id] = new Player(room.players[3].id, "RIGHT");
   room.objects.player0Score = new Score(room.players[0].id, "LEFT");
   room.objects.player1Score = new Score(room.players[1].id, "RIGHT");
-  room.objects.ball = new Ball(room.players[0].id, room.players[1].id);
+  room.objects.player2Score = new Score(room.players[2].id, "LEFT");
+  room.objects.player3Score = new Score(room.players[3].id, "RIGHT");
+  room.objects.ball = new Ball(
+    room.players[0].id,
+    room.players[1].id,
+    room.players[2].id,
+    room.players[3].id
+  );
   room.effects = [];
   room.sounds = [];
   room.loop = function () {};
@@ -87,7 +103,9 @@ var ready = {
   loop: function (room) {
     var player0ready = room.objects[room.players[0].id].ready;
     var player1ready = room.objects[room.players[1].id].ready;
-    if (player0ready && player1ready) {
+    var player2ready = room.objects[room.players[2].id].ready;
+    var player3ready = room.objects[room.players[3].id].ready;
+    if (player0ready && player1ready && player2ready && player3ready) {
       ready.destroy(room);
       playing.initialize(ready.io, room);
     }
@@ -121,15 +139,19 @@ var playing = {
     if (
       room.status == "playing" &&
       (room.objects[room.players[0].id].score >= SETTINGS.GOAL ||
-        room.objects[room.players[1].id].score >= SETTINGS.GOAL)
+        room.objects[room.players[1].id].score >= SETTINGS.GOAL ||
+        room.objects[room.players[2].id].score >= SETTINGS.GOAL ||
+        room.objects[room.players[3].id].score >= SETTINGS.GOAL)
     ) {
       room.status = "gameOver";
       room.gameOverDelay = 3;
     }
     if (room.status == "gameOver" && room.gameOverDelay-- < 0) {
       if (
-        room.objects[room.players[0].id].score >
-        room.objects[room.players[1].id].score
+        room.objects[room.players[0].id].score +
+          room.objects[room.players[2].id].score >
+        room.objects[room.players[1].id].score +
+          room.objects[room.players[3].id].score
       ) {
         room.RmGs.gameOver(room.id, room.players[0].id);
       } else {

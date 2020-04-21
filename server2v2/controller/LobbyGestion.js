@@ -4,9 +4,7 @@ function LobbyGestion(io) {
   LbGs.updating = false;
 
   LbGs.push = function (socket) {
-    if (LbGs.lobby.indexOf(socket) < 0) {
-      LbGs.lobby.push(socket);
-    }
+    LbGs.lobby.push(socket);
   };
   LbGs.kick = function (socket) {
     var index = LbGs.lobby.indexOf(socket);
@@ -22,10 +20,12 @@ function LobbyGestion(io) {
     if (LbGs.dispatching) return;
     LbGs.dispatching = true;
 
-    while (LbGs.lobby.length > 1) {
+    while (LbGs.lobby.length > 3) {
       var player0 = LbGs.lobby.splice(0, 1);
       var player1 = LbGs.lobby.splice(0, 1);
-      RmGs.create(player0[0], player1[0]);
+      var player2 = LbGs.lobby.splice(0, 1);
+      var player3 = LbGs.lobby.splice(0, 1);
+      RmGs.create(player0[0], player1[0], player2[0], player3[0]);
     }
     LbGs.dispatching = false;
   };
