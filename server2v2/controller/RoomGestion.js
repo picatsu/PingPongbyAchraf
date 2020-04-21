@@ -144,7 +144,7 @@ var playing = {
         room.objects[room.players[3].id].score >= SETTINGS.GOAL)
     ) {
       room.status = "gameOver";
-      room.gameOverDelay = 3;
+      room.gameOverDelay = 4;
     }
     if (room.status == "gameOver" && room.gameOverDelay-- < 0) {
       if (

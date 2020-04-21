@@ -17,9 +17,11 @@ function Player(id, position) {
   switch (position) {
     case "LEFT":
       xPos = PARAMS.PLAYER.GAP;
+
       break;
     case "RIGHT":
       xPos = PARAMS.WIDTH - PARAMS.PLAYER.GAP;
+
       break;
   }
   this.role = "player";
