@@ -1,17 +1,17 @@
-var SETTINGS = require("../controller/SETTINGS.js");
-var BaseObejct = require("./BaseObject.js");
+var PARAMS = require("../controller/GLOBALPARAMS.js");
+var Base = require("./Base.js");
 
 function Score(id, position) {
   var xPos;
   switch (position) {
     case "LEFT":
-      xPos = SETTINGS.WIDTH / 2 - SETTINGS.SCORE.GAP;
+      xPos = PARAMS.WIDTH / 2 - PARAMS.SCORE.GAP;
       break;
     case "RIGHT":
-      xPos = SETTINGS.WIDTH / 2 + SETTINGS.SCORE.GAP;
+      xPos = PARAMS.WIDTH / 2 + PARAMS.SCORE.GAP;
       break;
   }
-  BaseObejct.call(this);
+  Base.call(this);
   this.playerId = id;
   this.status.shape = "text";
   this.status.text = {
@@ -19,13 +19,13 @@ function Score(id, position) {
     font: "Arial",
     textAlign: "center",
     textBaseline: "middle",
-    size: SETTINGS.SCORE.SIZE,
+    size: PARAMS.SCORE.SIZE,
     message: undefined,
     x: xPos,
-    y: SETTINGS.SCORE.Y,
+    y: PARAMS.SCORE.Y,
   };
 }
-Score.prototype = new BaseObejct();
+Score.prototype = new Base();
 Score.prototype.constructor = Score;
 Score.prototype.update = function (room) {
   this.status.text.message = room.objects[this.playerId].score;

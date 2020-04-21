@@ -1,5 +1,5 @@
-var SETTINGS = require("../controller/SETTINGS.js");
-var BaseObejct = require("./BaseObject.js");
+var PARAMS = require("../controller/GLOBALPARAMS.js");
+var Base = require("./Base.js");
 
 var LEFT = 37,
   UP = 38,
@@ -8,7 +8,7 @@ var LEFT = 37,
 var UNIT = 2;
 
 function Player(id, position) {
-  BaseObejct.call(this);
+  Base.call(this);
   var color = "#fff7f7";
   for (var i = 0; i < 6; i++) {
     // color += Math.floor(Math.random() * 16).toString(16);
@@ -16,10 +16,10 @@ function Player(id, position) {
   var xPos;
   switch (position) {
     case "LEFT":
-      xPos = SETTINGS.PLAYER.GAP;
+      xPos = PARAMS.PLAYER.GAP;
       break;
     case "RIGHT":
-      xPos = SETTINGS.WIDTH - SETTINGS.PLAYER.GAP;
+      xPos = PARAMS.WIDTH - PARAMS.PLAYER.GAP;
       break;
   }
   this.role = "player";
@@ -34,14 +34,14 @@ function Player(id, position) {
   };
 
   this.status.rect = {
-    height: SETTINGS.PLAYER.HEIGHT,
-    width: SETTINGS.PLAYER.WIDTH,
+    height: PARAMS.PLAYER.HEIGHT,
+    width: PARAMS.PLAYER.WIDTH,
     x: xPos,
-    y: SETTINGS.HEIGHT / 2,
+    y: PARAMS.HEIGHT / 2,
     color: { fill: color },
   };
 }
-Player.prototype = new BaseObejct();
+Player.prototype = new Base();
 Player.prototype.constructor = Player;
 Player.prototype.update = function (room) {
   var player = this.status.rect;
@@ -74,13 +74,13 @@ Player.prototype.update = function (room) {
 module.exports = Player;
 
 function moveUp(player) {
-  if (player.y - player.height / 2 - UNIT >= 0 + SETTINGS.BORDER_WIDTH)
+  if (player.y - player.height / 2 - UNIT >= 0 + PARAMS.BORDER_WIDTH)
     player.y -= UNIT;
 }
 function moveDown(player) {
   if (
     player.y + player.height / 2 + UNIT <=
-    SETTINGS.HEIGHT - SETTINGS.BORDER_WIDTH
+    PARAMS.HEIGHT - PARAMS.BORDER_WIDTH
   )
     player.y += UNIT;
 }

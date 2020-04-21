@@ -1,8 +1,8 @@
-var SETTINGS = require("../controller/SETTINGS.js");
-var BaseObejct = require("./BaseObject.js");
+var PARAMS = require("../controller/GLOBALPARAMS.js");
+var Base = require("./Base.js");
 
 function Spark(x, y) {
-  BaseObejct.call(this);
+  Base.call(this);
   this.countMax = 100;
   this.count = 100;
   var test = 5;
@@ -19,7 +19,7 @@ function Spark(x, y) {
     globalAlpha: 1,
   };
 }
-Spark.prototype = new BaseObejct();
+Spark.prototype = new Base();
 Spark.prototype.constructor = Spark;
 Spark.prototype.update = function (room) {
   if (this.count > 0) {

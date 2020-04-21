@@ -1,57 +1,57 @@
-var Player = require("../model/PlayerObject.js");
-var Ball = require("../model/BallObject.js");
-var Score = require("../model/ScoreObject.js");
-var Spark = require("../model/SparkObject.js");
-var Countdown = require("../model/CountdownObject.js");
-var SETTINGS = require("./SETTINGS.js");
+var Player = require("../model/Player.js");
+var Ball = require("../model/Ball.js");
+var Score = require("../model/Score.js");
+var Spark = require("../model/Spark.js");
+var Countdown = require("../model/Countdown.js");
+var SETTINGS = require("./GLOBALPARAMS.js");
 
-function RoomManager(io) {
-  var RmMg = this;
-  RmMg.rooms = {};
-  RmMg.roomIndex = {};
+function RoomGestion(io) {
+  var RmGs = this;
+  RmGs.rooms = {};
+  RmGs.roomIndex = {};
 
-  RmMg.create = function (socket0, socket1) {
+  RmGs.create = function (socket0, socket1) {
     var roomId = socket0.id + socket1.id;
-    var room = new Room(RmMg, io, roomId, socket0, socket1);
+    var room = new Room(RmGs, io, roomId, socket0, socket1);
     socket0.join(roomId);
     socket1.join(roomId);
-    RmMg.rooms[roomId] = room;
-    RmMg.roomIndex[socket0.id] = roomId;
-    RmMg.roomIndex[socket1.id] = roomId;
+    RmGs.rooms[roomId] = room;
+    RmGs.roomIndex[socket0.id] = roomId;
+    RmGs.roomIndex[socket1.id] = roomId;
     ready.initialize(io, room);
     io.to(socket0.id).emit("ready", "left");
     io.to(socket1.id).emit("ready", "right");
     console.log("Room Cree :", roomId);
   };
-  RmMg.destroy = function (roomId) {
-    var room = RmMg.rooms[roomId];
+  RmGs.destroy = function (roomId) {
+    var room = RmGs.rooms[roomId];
     room.players.forEach(function (socket) {
       var message =
         !room.objects[socket.id].ready && !room.objects.countdown
           ? "Tu n'es pas prêt"
           : null;
-      delete RmMg.roomIndex[socket.id];
+      delete RmGs.roomIndex[socket.id];
       io.to(socket.id).emit("destroy", message);
     });
-    delete RmMg.rooms[roomId];
+    delete RmGs.rooms[roomId];
   };
-  RmMg.gameOver = function (roomId, winner) {
-    var room = RmMg.rooms[roomId];
+  RmGs.gameOver = function (roomId, winner) {
+    var room = RmGs.rooms[roomId];
     room.players.forEach(function (socket) {
       var message = socket.id == winner ? "VICTOIRE ! " : "DEFAITE ! ...";
-      delete RmMg.roomIndex[socket.id];
+      delete RmGs.roomIndex[socket.id];
       io.to(socket.id).emit("destroy", message);
     });
-    delete RmMg.rooms[roomId];
+    delete RmGs.rooms[roomId];
   };
 }
 
-module.exports = RoomManager;
+module.exports = RoomGestion;
 
-function Room(RmMg, io, id, socket0, socket1) {
+function Room(RmGs, io, id, socket0, socket1) {
   var room = this;
   room.id = id;
-  room.RmMg = RmMg;
+  room.RmGs = RmGs;
   room.players = [socket0, socket1];
   room.objects = {};
   room.objects[room.players[0].id] = new Player(room.players[0].id, "LEFT");
@@ -81,7 +81,7 @@ var ready = {
     room.objects.countdown = new Countdown(10, null, SETTINGS.HEIGHT - 40);
     room.objects.countdown.action = function (room) {
       delete room.objects.countdown;
-      room.RmMg.destroy(room.id);
+      room.RmGs.destroy(room.id);
     };
   },
   loop: function (room) {
@@ -131,9 +131,9 @@ var playing = {
         room.objects[room.players[0].id].score >
         room.objects[room.players[1].id].score
       ) {
-        room.RmMg.gameOver(room.id, room.players[0].id);
+        room.RmGs.gameOver(room.id, room.players[0].id);
       } else {
-        room.RmMg.gameOver(room.id, room.players[1].id);
+        room.RmGs.gameOver(room.id, room.players[1].id);
       }
     }
   },

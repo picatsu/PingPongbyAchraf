@@ -1,8 +1,8 @@
-var SETTINGS = require("../controller/SETTINGS.js");
-var BaseObejct = require("./BaseObject.js");
+var PARAMS = require("../controller/GLOBALPARAMS.js");
+var Base = require("./Base.js");
 
 function Countdown(count, xPos, yPos, size) {
-  BaseObejct.call(this);
+  Base.call(this);
   this.defaultCount = count ? count : 10;
   this.defaultSize = size ? size : 40;
   this.createdAt = Date.now();
@@ -15,11 +15,11 @@ function Countdown(count, xPos, yPos, size) {
     textBaseline: "middle",
     size: this.defaultSize,
     message: this.defaultCount,
-    x: xPos ? xPos : SETTINGS.WIDTH / 2,
-    y: yPos ? yPos : SETTINGS.HEIGHT / 2,
+    x: xPos ? xPos : PARAMS.WIDTH / 2,
+    y: yPos ? yPos : PARAMS.HEIGHT / 2,
   };
 }
-Countdown.prototype = new BaseObejct();
+Countdown.prototype = new Base();
 Countdown.prototype.constructor = Countdown;
 Countdown.prototype.update = function (room) {
   var count =

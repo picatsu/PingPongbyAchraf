@@ -6,7 +6,7 @@ var path = require("path");
 
 app.use(express.static(path.join(__dirname, "view")));
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 http.listen(port, function () {
   console.log("server on!: http://localhost:3000/");
 });

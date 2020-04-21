@@ -1,6 +1,6 @@
-var SETTINGS = require("../controller/SETTINGS.js");
-var BaseObejct = require("./BaseObject.js");
-var Spark = require("./SparkObject.js");
+var PARAMS = require("../controller/GLOBALPARAMS.js");
+var Base = require("./Base.js");
+var Spark = require("./Spark.js");
 
 var COLLUSION_TYPE = {
   NO_COLLUSION: -1,
@@ -16,7 +16,7 @@ var QUADRANT = { FIRST: 1, SECOND: 2, THIRD: 3, FOURTH: 4 };
 var TO = { RIGHT: "RIGHT", LEFT: "LEFT", UP: "UP", DOWN: "DOWN" };
 
 function Ball(player0Id, player1Id) {
-  BaseObejct.call(this);
+  Base.call(this);
   this.playerIds = [player0Id, player1Id];
   this.dynamic = {};
   this.speed = 4;
@@ -26,14 +26,14 @@ function Ball(player0Id, player1Id) {
   this.serve = new Serve(player0Id, -1);
   this.status.shape = "rectangle";
   this.status.rect = {
-    x: SETTINGS.WIDTH / 2,
-    y: SETTINGS.HEIGHT / 2,
-    width: SETTINGS.BALL.WIDTH,
-    height: SETTINGS.BALL.HEIGHT,
+    x: PARAMS.WIDTH / 2,
+    y: PARAMS.HEIGHT / 2,
+    width: PARAMS.BALL.WIDTH,
+    height: PARAMS.BALL.HEIGHT,
     color: { fill: "#f2c624" },
   };
 }
-Ball.prototype = new BaseObejct();
+Ball.prototype = new Base();
 Ball.prototype.constructor = Ball;
 Ball.prototype.update = function (room) {
   var ball = this.status.rect;
@@ -44,7 +44,7 @@ Ball.prototype.update = function (room) {
       if (object == this.serve.player) {
         playerStat = room.objects[object].status.rect;
         ball.y = playerStat.y;
-        if (playerStat.x < SETTINGS.WIDTH / 2) {
+        if (playerStat.x < PARAMS.WIDTH / 2) {
           ball.x = playerStat.x + ball.width / 2 + playerStat.width / 2;
         } else {
           ball.x = playerStat.x - ball.width / 2 - playerStat.width / 2;
@@ -53,35 +53,35 @@ Ball.prototype.update = function (room) {
           this.serve.isOn = false;
           var newAngle;
           if (
-            playerStat.x < SETTINGS.WIDTH / 2 &&
-            playerStat.y < SETTINGS.HEIGHT / 2
+            playerStat.x < PARAMS.WIDTH / 2 &&
+            playerStat.y < PARAMS.HEIGHT / 2
           ) {
-            newAngle = -SETTINGS.SERVE_ANGLE;
+            newAngle = -PARAMS.SERVE_ANGLE;
           } else if (
-            playerStat.x < SETTINGS.WIDTH / 2 &&
-            playerStat.y > SETTINGS.HEIGHT / 2
+            playerStat.x < PARAMS.WIDTH / 2 &&
+            playerStat.y > PARAMS.HEIGHT / 2
           ) {
-            newAngle = +SETTINGS.SERVE_ANGLE;
+            newAngle = +PARAMS.SERVE_ANGLE;
           } else if (
-            playerStat.x < SETTINGS.WIDTH / 2 &&
-            playerStat.y == SETTINGS.HEIGHT / 2
+            playerStat.x < PARAMS.WIDTH / 2 &&
+            playerStat.y == PARAMS.HEIGHT / 2
           ) {
-            newAngle = getRandomSign() * SETTINGS.SERVE_ANGLE;
+            newAngle = getRandomSign() * PARAMS.SERVE_ANGLE;
           } else if (
-            playerStat.x > SETTINGS.WIDTH / 2 &&
-            playerStat.y < SETTINGS.HEIGHT / 2
+            playerStat.x > PARAMS.WIDTH / 2 &&
+            playerStat.y < PARAMS.HEIGHT / 2
           ) {
-            newAngle = 180 + SETTINGS.SERVE_ANGLE;
+            newAngle = 180 + PARAMS.SERVE_ANGLE;
           } else if (
-            playerStat.x > SETTINGS.WIDTH / 2 &&
-            playerStat.y > SETTINGS.HEIGHT / 2
+            playerStat.x > PARAMS.WIDTH / 2 &&
+            playerStat.y > PARAMS.HEIGHT / 2
           ) {
-            newAngle = 180 - SETTINGS.SERVE_ANGLE;
+            newAngle = 180 - PARAMS.SERVE_ANGLE;
           } else if (
-            playerStat.x > SETTINGS.WIDTH / 2 &&
-            playerStat.y == SETTINGS.HEIGHT / 2
+            playerStat.x > PARAMS.WIDTH / 2 &&
+            playerStat.y == PARAMS.HEIGHT / 2
           ) {
-            newAngle = 180 + getRandomSign() * SETTINGS.SERVE_ANGLE;
+            newAngle = 180 + getRandomSign() * PARAMS.SERVE_ANGLE;
           }
           this.dynamic = angleToVelocity(newAngle);
         }
@@ -105,7 +105,7 @@ Ball.prototype.update = function (room) {
       ball.y += this.dynamic.yVel * this.speed;
     }
     /* dedug mode
-    if(ball.x <= 50 || ball.x >= SETTINGS.WIDTH - 50 ){
+    if(ball.x <= 50 || ball.x >= PARAMS.WIDTH - 50 ){
     this.speed = 0.2;
       } else {
       this.speed = 2;
@@ -118,18 +118,18 @@ Ball.prototype.update = function (room) {
       ball.color.fill = "#f2c624";
       this.boostCount = 0;
     }
-    if (ball.x >= SETTINGS.WIDTH + ball.width * 2) {
+    if (ball.x >= PARAMS.WIDTH + ball.width * 2) {
       room.objects[this.playerIds[0]].score++;
       this.serve = new Serve(this.playerIds[1]);
       ball.color.fill = "#f2c624";
       this.boostCount = 0;
     }
-    if (ball.y - ball.height / 2 <= 0 + SETTINGS.BORDER_WIDTH) {
+    if (ball.y - ball.height / 2 <= 0 + PARAMS.BORDER_WIDTH) {
       this.dynamic = bounce(0, this.dynamic.angle);
       room.sounds.push("pong001");
     }
 
-    if (ball.y + ball.height / 2 >= SETTINGS.HEIGHT - SETTINGS.BORDER_WIDTH) {
+    if (ball.y + ball.height / 2 >= PARAMS.HEIGHT - PARAMS.BORDER_WIDTH) {
       this.dynamic = bounce(0, this.dynamic.angle);
       room.sounds.push("pong001");
     }
@@ -195,8 +195,8 @@ Ball.prototype.update = function (room) {
 
 Ball.prototype.initialize = function (objects) {
   var ball = this.status.rect;
-  ball.x = SETTINGS.WIDTH / 2;
-  ball.y = SETTINGS.HEIGHT / 2;
+  ball.x = PARAMS.WIDTH / 2;
+  ball.y = PARAMS.HEIGHT / 2;
 };
 
 module.exports = Ball;
@@ -211,9 +211,9 @@ function GenerateSparks(x, y) {
 function stratght(angle) {
   var newAngle = getBouncedAngle(90, angle);
   if (angle == 180 || angle === 0) {
-    newAngle = getRandomSign() * SETTINGS.STRAIGHT_ADJUST;
+    newAngle = getRandomSign() * PARAMS.STRAIGHT_ADJUST;
   } else {
-    var adj = getRandomSign() * SETTINGS.STRAIGHT_ADJUST;
+    var adj = getRandomSign() * PARAMS.STRAIGHT_ADJUST;
     switch (getQuadrant(newAngle)) {
       case QUADRANT.FIRST:
       case QUADRANT.THIRD:
@@ -246,7 +246,7 @@ function getBouncedAngle(serfaceAngle, angle) {
 
 function slide(angle) {
   var newAngle = getBouncedAngle(90, angle);
-  var adj = SETTINGS.EDGE_SHOOT_ANGLE_ADJUST;
+  var adj = PARAMS.EDGE_SHOOT_ANGLE_ADJUST;
   switch (getQuadrant(newAngle)) {
     case QUADRANT.FIRST:
     case QUADRANT.THIRD:
@@ -262,7 +262,7 @@ function slide(angle) {
 
 function smash(angle) {
   var newAngle = trimAngle(angle + 180);
-  var adj = SETTINGS.EDGE_SHOOT_ANGLE_ADJUST;
+  var adj = PARAMS.EDGE_SHOOT_ANGLE_ADJUST;
   switch (getQuadrant(newAngle)) {
     case QUADRANT.FIRST:
     case QUADRANT.THIRD:
@@ -321,8 +321,8 @@ function ballCollusionCheck(ballStat, playerStat, ballAngle) {
     }
   });
   var type = COLLUSION_TYPE.NO_COLLUSION;
-  var sAngle = SETTINGS.STRATGHT_ANGLE;
-  var eAngle = SETTINGS.EDGE_ANGLE;
+  var sAngle = PARAMS.STRATGHT_ANGLE;
+  var eAngle = PARAMS.EDGE_ANGLE;
 
   if (collusions.length === 0) return type;
   var p2bAngle = getAngle(playerStat, ballStat);
