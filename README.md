@@ -1,6 +1,7 @@
 # PingPong Achraf
 
 ** Compte rendu projet Pong dans le cadre de l'ue Techno Log **
+** Realiser par Achraf Lahkiky **
 
 Ce repository expose 3 applications Js : 1 client Web en Angular, 2 api Nodejs.
 
