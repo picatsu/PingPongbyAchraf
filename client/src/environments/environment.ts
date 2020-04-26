@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   nodeApiUrl: "http://localhost:3000/api/v1",
+  node1v1: "https://limitless-caverns-05108.herokuapp.com/", // http://localhost:3000/
+  node2v2: "https://safe-castle-82245.herokuapp.com/", // http://localhost:4000/
 };
 
 /*

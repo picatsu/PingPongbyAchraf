@@ -10,6 +10,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-dashboard",
   templateUrl: "dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
   @ViewChild("content") contentElement: ElementRef;
@@ -31,15 +32,26 @@ export class DashboardComponent implements OnInit {
   private url = "http://localhost:" + 3000;
   textBack = "";
   constructor(
-    private sharedService: SharedService,
+    public sharedService: SharedService,
     private modalService: NgbModal
   ) {
     this.socket = io(this.url);
     this.sharedService.getAllUsers().subscribe((x: User[]) => {
       this.users = x;
     });
+    if (!localStorage.getItem("dejalu")) this.playAudio();
   }
-
+  getActiveUser() {
+    return localStorage.getItem("player1");
+  }
+  playAudio() {
+    let audio = new Audio();
+    audio.src = "../../../assets/audioPINGPONG2.mp3";
+    audio.load();
+    audio.volume = 0.09;
+    audio.play();
+    localStorage.setItem("dejalu", "yes");
+  }
   getMessage() {
     //return this.socket
     //  .fromEvent("new message") ;

@@ -44,6 +44,11 @@ export class PongGameComponent implements OnInit {
     private readonly sharedService: SharedService,
     private changeDetector: ChangeDetectorRef
   ) {
+    if (!localStorage.getItem("dejaScore")) {
+      localStorage.setItem("bestScore", "0");
+      localStorage.setItem("lastScore", "0");
+    }
+
     this.pongGame = new PongGame(this.height, this.width);
     this.controlState = { upPressed: false, downPressed: false };
     this.controlEnnemiState = { upPressed: false, downPressed: false };
@@ -58,6 +63,21 @@ export class PongGameComponent implements OnInit {
 
   getEnnemiScore() {
     return this.pongGame.enemyPaddle.score;
+  }
+
+  getLastScore() {
+    return localStorage.getItem("lastScore");
+  }
+  getBestScore() {
+    return localStorage.getItem("bestScore");
+  }
+
+  setLastScore(score: number) {
+    localStorage.setItem("dejaScore", "yes");
+    localStorage.setItem("lastScore", score.toString());
+    if (Number(this.getBestScore()) < score) {
+      localStorage.setItem("bestScore", score.toString());
+    }
   }
 
   freeze() {
@@ -99,6 +119,7 @@ export class PongGameComponent implements OnInit {
       if (this.pongGame.gameOver()) {
         this.context.font = "30px Arial";
         if (this.getPlayerScore() >= this.getEnnemiScore()) {
+          this.setLastScore(this.getPlayerScore());
           this.context.fillText(
             "YOU WIN ! Your score : " + this.getPlayerScore(),
             50,

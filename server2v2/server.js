@@ -4,9 +4,9 @@ const express = require("express"),
   http = require("http").Server(app),
   io = require("socket.io")(http),
   PARAMS = require("./controller/GLOBALPARAMS.js"),
-  lobbyGESTION = new (require("./controller/LobbyGESTION.js"))(io),
-  roomGESTION = new (require("./controller/RoomGESTION.js"))(io),
-  gameGESTION = new (require("./controller/GameGESTION.js"))(io, roomGESTION),
+  lobbyGESTION = new (require("./controller/LobbyGestion.js"))(io),
+  roomGESTION = new (require("./controller/RoomGestion.js"))(io),
+  gameGESTION = new (require("./controller/GameGestion.js"))(io, roomGESTION),
   port = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname, "view")));
@@ -62,5 +62,12 @@ io.on("connection", function (socket) {
         x: x,
         y: y,
       };
+  });
+  socket.on("maxscore", (message) => {
+    console.log("socket max score a recu sa : ", message);
+    if (parseInt(message) > PARAMS.GOAL) {
+      PARAMS.GOAL = parseInt(message);
+      io.emit("maxscore", PARAMS.GOAL);
+    }
   });
 });

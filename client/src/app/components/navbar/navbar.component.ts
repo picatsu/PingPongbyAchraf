@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
-
+  public audio = new Audio();
   public isCollapsed = true;
   public player1 = "";
   public player2 = "";
@@ -31,6 +31,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.sidebarVisible = false;
     this.player1 = localStorage.getItem("player1");
     this.player2 = localStorage.getItem("player2");
+    this.audio.src = "../../assets/audioPINGPONG.mp3";
+    this.audio.volume = 0.05;
+  }
+  playMusic() {
+    this.audio.load();
+    this.audio.play();
+  }
+  stopMusic() {
+    this.audio.pause();
   }
   public test() {
     localStorage.setItem("player1", this.player1);

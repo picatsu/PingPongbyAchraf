@@ -97,14 +97,14 @@
           </a>
           <ul class="dropdown-navbar" ngbDropdownMenu>
             <li class="nav-link">
-              <a class="nav-item" href="javascript:void(0)" ngbDropdownItem>
-                Profile
-              </a>
+              <button class="nav-item" (click)="playMusic()" ngbDropdownItem>
+                Play Music
+              </button>
             </li>
             <li class="nav-link">
-              <a class="nav-item" href="javascript:void(0)" ngbDropdownItem>
-                Settings
-              </a>
+              <button class="nav-item" (click)="stopMusic()" ngbDropdownItem>
+                Stop Music
+              </button>
             </li>
             <li class="dropdown-divider"></li>
             <li class="nav-link">

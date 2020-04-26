@@ -31,24 +31,16 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/pongonline",
-    title: "Pong Online",
+    title: "Pong Online 1 v 1",
     rtlTitle: "خرائط",
     icon: "icon-cloud-upload-94",
     class: "",
   },
   {
     path: "/vsdeux",
-    title: "2 vs 2 ",
+    title: "Pong Online 2 vs 2 ",
     rtlTitle: "طباعة",
     icon: "icon-align-center",
-    class: "",
-  },
-
-  {
-    path: "/user",
-    title: "Games Rules",
-    rtlTitle: "ملف تعريفي للمستخدم",
-    icon: "icon-single-02",
     class: "",
   },
 ];

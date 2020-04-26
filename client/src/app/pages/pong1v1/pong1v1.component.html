@@ -17,7 +17,9 @@
       <div class="container" style="width: 800px;">
         <div class="row" style="width: 800px;">
           <div class="col-sm">
-            <p style="float: left;">Player 1 : {{ getPlayerScore() }}</p>
+            <p style="float: left; font-size: 24px;">
+              Clavier : {{ getPlayerScore() }}
+            </p>
           </div>
           <div class="col-sm">
             <button
@@ -38,7 +40,9 @@
             </button>
           </div>
           <div class="col-sm">
-            <p style="float: right;">Player 2 : {{ getEnnemiScore() }}</p>
+            <p style="float: right; font-size: 24px;">
+              Souris : {{ getEnnemiScore() }}
+            </p>
           </div>
         </div>
       </div>
@@ -66,25 +70,9 @@
         </button>
       </div>
       <div style="height: 100px;"></div>
-      <div style="margin-left: 40px;">
+      <div style="margin-left: 40px; font-size: 24px;">
         <p>Last Score : {{ getLastScore() }} by {{ getAuthorLastScore() }}</p>
         <p>Best Score : {{ getBestScore() }} by {{ getAuthorBestScore() }}</p>
-        <input
-          class="form-control"
-          id="inlineFormInputGroup"
-          placeholder="Username player 1 "
-          type="text"
-          name="activeUsername"
-          ngModel
-        />
-        <input
-          class="form-control"
-          id="inlineFormInputGroup"
-          placeholder="Username player 2 "
-          type="text"
-          name="activeUsername"
-          ngModel
-        />
       </div>
     </div>
   </div>
