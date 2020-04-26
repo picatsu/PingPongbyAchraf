@@ -22,15 +22,11 @@ Ce repository expose 3 applications Js : 1 client Web en Angular, 2 api Nodejs.
 
 Si vous desirez lancer le programme en local
 
-```ts
 http://localhost:4200/
-```
 
 Si vous desirez consulter la version déployée
 
-```ts
- https://young-dawn-77831.herokuapp.com/#/dashboard
-```
+https://young-dawn-77831.herokuapp.com/#/dashboard
 
 ## Features Disponibles
 
