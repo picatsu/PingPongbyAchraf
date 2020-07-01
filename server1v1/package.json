@@ -7,21 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imtaekh/online_ping_pong.git"
-  },
-  "keywords": [
-    "node",
-    "game",
-    "online"
-  ],
-  "author": "imtaek hong",
+  "author": "Achraf Lahkiky",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/imtaekh/online_ping_pong/issues"
-  },
-  "homepage": "https://github.com/imtaekh/online_ping_pong#readme",
   "dependencies": {
     "express": "^4.13.4",
     "nodemon": "^2.0.3",
