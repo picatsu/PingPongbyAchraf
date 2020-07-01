@@ -1,7 +1,7 @@
 {
-  "name": "online_ping_pong",
+  "name": "online_ping_pong_2v2",
   "version": "1.0.0",
-  "description": "fun online ping pong",
+  "description": "online ping pong 2 v 2 ",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
