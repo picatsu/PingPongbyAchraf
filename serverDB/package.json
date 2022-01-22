@@ -22,7 +22,7 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.1",
     "morgan": "^1.9.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "nodemon": "^2.0.2",
     "request": "^2.88.0",
     "swagger": "^0.7.5",
